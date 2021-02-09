@@ -1,0 +1,29 @@
+syntax = "proto3"; /* version of the protocol buffers language */
+option csharp_namespace = "DNZ.TicketingSystem.GrpcServer.Protos";
+
+enum TicketStatus {
+    option allow_alias = true;
+	NEW = 0;
+	OPEN = 1;
+	INPROGRESS = 2;
+	CLOSED = 3;
+	DELETED = 4;
+	CANCELED = 4;
+}
+
+message CreateTicketDto {
+	int32 user_id = 1;
+	int32 category_id = 2;
+	string title = 3;
+	string description = 4;
+}
+
+message TicketCreationResultDto {	
+	string result_message = 1;
+	int32 tracking_number = 2;
+	TicketStatus ticket_status = 3;
+} 
+
+service TicketService {
+	rpc CreateTicket(CreateTicketDto) returns (TicketCreationResultDto);
+}
